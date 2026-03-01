@@ -1159,7 +1159,7 @@
       <h2>Готовы сделать первый шаг?</h2>
       <p>Свяжитесь удобным способом. Вы получите понятный ответ по формату работы и ближайшим свободным слотам.</p>
       <div class="contact-row">
-        <button class="btn btn--primary" type="button" data-open-lead-form data-goal="open_quick_form">Записаться в 1 клик</button>
+        <button class="btn btn--secondary" type="button" data-open-lead-form data-goal="open_quick_form">Записаться в 1 клик</button>
         <a class="btn btn--secondary btn--phone" href="tel:+79806580030" data-goal="click_phone">
           <span class="btn__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1366,23 +1366,29 @@
             },
             body: JSON.stringify(payload)
           }).then(function (response) {
-            if (!response.ok) {
-              throw new Error("submit_failed");
-            }
             return response.json().catch(function () {
-              return { ok: true };
+              return null;
+            }).then(function (data) {
+              if (!response.ok) {
+                throw { code: data && data.error ? data.error : "submit_failed" };
+              }
+              if (!data || data.ok !== true) {
+                throw { code: data && data.error ? data.error : "submit_failed" };
+              }
+              return data;
             });
-          }).then(function (data) {
-            if (!data || data.ok !== true) {
-              throw new Error("submit_failed");
-            }
+          }).then(function () {
             setLeadStatus("Спасибо! Заявка отправлена, скоро свяжусь с вами.", "success");
             if (typeof window.ym === "function") {
               window.ym(metrikaCounterId, "reachGoal", "submit_quick_form_success");
             }
             leadForm.reset();
             setTimeout(closeLeadModal, 1400);
-          }).catch(function () {
+          }).catch(function (error) {
+            if (error && error.code === "rate_limited") {
+              setLeadStatus("Лимит заявок на сегодня исчерпан. Попробуйте снова завтра или напишите в Telegram.", "error");
+              return;
+            }
             setLeadStatus("Не удалось отправить форму. Попробуйте еще раз или напишите в Telegram.", "error");
           }).finally(function () {
             isSubmittingLead = false;

@@ -31,6 +31,11 @@ npx wrangler secret put TELEGRAM_CHAT_IDS
 2. Откройте `https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates`.
 3. Возьмите `chat.id` из ответа.
 
+Лимиты заявок в день (по МСК) задаются в `wrangler.toml`:
+
+- `MAX_SUBMISSIONS_PER_PHONE_PER_DAY` (по умолчанию `3`)
+- `MAX_SUBMISSIONS_PER_IP_PER_DAY` (по умолчанию `20`)
+
 ## 3) Деплой
 
 Если это первый Worker в аккаунте, сначала зарегистрируйте `workers.dev` subdomain:

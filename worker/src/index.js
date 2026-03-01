@@ -53,11 +53,31 @@ export default {
     }
 
     const userAgent = request.headers.get("User-Agent") || "";
+    const ipAddress = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "";
     const submittedAtIso = new Date().toISOString();
     const submittedAtMoscow = formatMoscowDate(submittedAtIso);
+    const dayKeyMoscow = getMoscowDayKey(new Date(submittedAtIso));
     const senderInfo = summarizeSender(userAgent);
     const contactPhone = buildContactPhone(phone);
     const contactName = splitName(name);
+
+    const phoneLimit = toPositiveInt(env.MAX_SUBMISSIONS_PER_PHONE_PER_DAY, 3);
+    const ipLimit = toPositiveInt(env.MAX_SUBMISSIONS_PER_IP_PER_DAY, 20);
+
+    const rateLimit = await consumeRateLimit(env, {
+      dayKey: dayKeyMoscow,
+      phone: contactPhone || phone,
+      ip: ipAddress,
+      phoneLimit,
+      ipLimit,
+    });
+
+    if (!rateLimit.allowed) {
+      return jsonResponse(request, env, {
+        ok: false,
+        error: "rate_limited",
+      }, 429);
+    }
 
     const pageText = page || "-";
     const message = [
@@ -120,6 +140,68 @@ export default {
   },
 };
 
+export class RateLimiterDO {
+  constructor(state) {
+    this.state = state;
+  }
+
+  async fetch(request) {
+    if (request.method !== "POST") {
+      return doJson({ ok: false, error: "method_not_allowed" }, 405);
+    }
+
+    let payload;
+    try {
+      payload = await request.json();
+    } catch {
+      return doJson({ ok: false, error: "invalid_json" }, 400);
+    }
+
+    const entries = Array.isArray(payload.entries) ? payload.entries : [];
+    if (entries.length === 0) {
+      return doJson({ ok: true, allowed: true }, 200);
+    }
+
+    const normalized = entries
+      .map((entry) => {
+        const key = cleanText(entry.key, 180);
+        const limit = toPositiveInt(entry.limit, 0);
+        return { key, limit };
+      })
+      .filter((entry) => entry.key && entry.limit > 0);
+
+    if (normalized.length === 0) {
+      return doJson({ ok: true, allowed: true }, 200);
+    }
+
+    const keys = normalized.map((entry) => entry.key);
+    const current = await this.state.storage.get(keys);
+    const updates = [];
+
+    for (const entry of normalized) {
+      const rawCount = current.get(entry.key);
+      const count = Number.isFinite(rawCount) ? rawCount : 0;
+      if (count >= entry.limit) {
+        return doJson({
+          ok: true,
+          allowed: false,
+          key: entry.key,
+          limit: entry.limit,
+          count,
+        }, 200);
+      }
+
+      updates.push({
+        key: entry.key,
+        count: count + 1,
+      });
+    }
+
+    await Promise.all(updates.map((item) => this.state.storage.put(item.key, item.count)));
+    return doJson({ ok: true, allowed: true }, 200);
+  }
+}
+
 function parseChatIds(raw) {
   return String(raw)
     .split(",")
@@ -136,6 +218,104 @@ function cleanText(value, maxLength) {
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, maxLength);
+}
+
+async function consumeRateLimit(env, params) {
+  const limiter = env.RATE_LIMITER;
+  if (!limiter) {
+    return { allowed: true };
+  }
+
+  const phoneKey = normalizePhoneKey(params.phone);
+  const ipKey = normalizeIpKey(params.ip);
+  const dayKey = cleanText(params.dayKey, 20);
+  const entries = [];
+
+  if (phoneKey) {
+    entries.push({
+      key: "phone:" + dayKey + ":" + phoneKey,
+      limit: params.phoneLimit,
+    });
+  }
+
+  if (ipKey) {
+    entries.push({
+      key: "ip:" + dayKey + ":" + ipKey,
+      limit: params.ipLimit,
+    });
+  }
+
+  if (entries.length === 0) {
+    return { allowed: true };
+  }
+
+  try {
+    const id = limiter.idFromName("global-limiter");
+    const stub = limiter.get(id);
+    const response = await stub.fetch("https://rate-limiter/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ entries }),
+    });
+
+    if (!response.ok) {
+      console.error("rate_limiter_request_failed", response.status);
+      return { allowed: true };
+    }
+
+    const data = await response.json();
+    if (data && data.allowed === false) {
+      return { allowed: false };
+    }
+
+    return { allowed: true };
+  } catch (error) {
+    console.error("rate_limiter_unavailable", error && error.message ? error.message : error);
+    return { allowed: true };
+  }
+}
+
+function normalizePhoneKey(value) {
+  const phone = buildContactPhone(value);
+  if (phone) {
+    return phone.replace(/\D/g, "");
+  }
+
+  const digits = String(value || "").replace(/\D/g, "");
+  return digits.slice(-15);
+}
+
+function normalizeIpKey(value) {
+  return cleanText(String(value || "").split(",")[0], 80);
+}
+
+function toPositiveInt(value, fallback) {
+  const parsed = Number.parseInt(String(value), 10);
+  if (Number.isFinite(parsed) && parsed > 0) {
+    return parsed;
+  }
+
+  return fallback;
+}
+
+function getMoscowDayKey(date) {
+  const formatter = new Intl.DateTimeFormat("ru-RU", {
+    timeZone: "Europe/Moscow",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const parts = formatter.formatToParts(date);
+  const day = parts.find((part) => part.type === "day");
+  const month = parts.find((part) => part.type === "month");
+  const year = parts.find((part) => part.type === "year");
+  if (!day || !month || !year) {
+    return "unknown-day";
+  }
+
+  return year.value + "-" + month.value + "-" + day.value;
 }
 
 function buildContactPhone(value) {
@@ -277,6 +457,15 @@ function jsonResponse(request, env, payload, status) {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       ...corsHeaders(request, env),
+    },
+  });
+}
+
+function doJson(payload, status) {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
     },
   });
 }
