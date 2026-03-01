@@ -1,0 +1,4 @@
+.wrangler/
+worker/.wrangler/
+node_modules/
+worker/node_modules/

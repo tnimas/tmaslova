@@ -1,0 +1,13 @@
+{
+  "name": "tmaslova-leads-worker",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.69.0"
+  }
+}

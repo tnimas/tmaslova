@@ -705,6 +705,139 @@
       gap: 10px;
     }
 
+    .lead-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lead-modal[hidden] {
+      display: none;
+    }
+
+    .lead-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 37, 63, 0.5);
+      backdrop-filter: blur(2px);
+    }
+
+    .lead-modal__dialog {
+      position: relative;
+      z-index: 1;
+      width: min(540px, 100%);
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid #b9d2fb;
+      background: #f5f9ff;
+      box-shadow: 0 24px 48px rgba(24, 60, 113, 0.24);
+    }
+
+    .lead-modal__close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: #e3eeff;
+      color: #2c5ea6;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .lead-modal h3 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .lead-modal__sub {
+      margin: 8px 0 0;
+      color: #445c80;
+      font-size: 15px;
+    }
+
+    .lead-form {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .lead-form__label {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 650;
+      color: #2f4567;
+    }
+
+    .lead-form__input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid #b7cff7;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .lead-form__input:focus {
+      outline: 2px solid rgba(23, 113, 241, 0.25);
+      border-color: #4c8ef6;
+    }
+
+    .lead-form__agree {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 2px;
+      font-size: 13px;
+      color: #4b5f7f;
+      line-height: 1.35;
+    }
+
+    .lead-form__agree input {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-strong);
+      flex: 0 0 16px;
+    }
+
+    .lead-form__submit {
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .lead-form__submit[disabled] {
+      opacity: 0.75;
+      cursor: wait;
+    }
+
+    .lead-form__status {
+      margin: 2px 2px 0;
+      min-height: 20px;
+      font-size: 14px;
+      color: #395377;
+    }
+
+    .lead-form__status.is-error {
+      color: #b03a3a;
+    }
+
+    .lead-form__status.is-success {
+      color: #1f7a3e;
+    }
+
     footer {
       padding: 26px 0 6px;
       color: #6a7991;
@@ -778,6 +911,18 @@
         font-size: 14px;
       }
 
+      .lead-modal {
+        padding: 12px;
+      }
+
+      .lead-modal__dialog {
+        padding: 20px 16px 16px;
+      }
+
+      .lead-modal h3 {
+        font-size: 24px;
+      }
+
       .hero__content,
       .hero__person {
         padding: 20px;
@@ -807,7 +952,7 @@
     }
   </style>
 </head>
-<body>
+<body data-lead-endpoint="https://tmaslova-leads.tnimas.workers.dev/lead">
   <noscript><div><img src="https://mc.yandex.ru/watch/107054646" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <header class="top container">
     <a class="brand" href="#top" id="top">
@@ -836,7 +981,7 @@
           <li>Конфиденциально, без осуждения, с понятным планом работы</li>
         </ul>
         <div class="cta-row">
-          <a class="btn btn--primary" href="https://t.me/psimaslova" target="_blank" rel="noopener" data-goal="click_telegram">Записаться в Telegram</a>
+          <button class="btn btn--primary" type="button" data-open-lead-form data-goal="open_quick_form">Записаться в 1 клик</button>
           <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener" data-goal="click_vk">Написать в VK</a>
         </div>
         <p class="hero__note">Обычно отвечаю в течение дня. Первый контакт можно сделать коротко: "Хочу записаться на консультацию".</p>
@@ -1014,6 +1159,7 @@
       <h2>Готовы сделать первый шаг?</h2>
       <p>Свяжитесь удобным способом. Вы получите понятный ответ по формату работы и ближайшим свободным слотам.</p>
       <div class="contact-row">
+        <button class="btn btn--primary" type="button" data-open-lead-form data-goal="open_quick_form">Записаться в 1 клик</button>
         <a class="btn btn--secondary btn--phone" href="tel:+79806580030" data-goal="click_phone">
           <span class="btn__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1055,6 +1201,29 @@
     </section>
   </main>
 
+  <div class="lead-modal" id="leadModal" hidden>
+    <div class="lead-modal__backdrop" data-close-lead-form></div>
+    <section class="lead-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+      <button class="lead-modal__close" type="button" aria-label="Закрыть" data-close-lead-form>&times;</button>
+      <h3 id="leadModalTitle">Записаться в 1 клик</h3>
+      <p class="lead-modal__sub">Оставьте имя и номер телефона. Я напишу вам, чтобы согласовать удобное время консультации.</p>
+      <form class="lead-form" id="leadForm" novalidate>
+        <label class="lead-form__label" for="leadName">Ваше имя
+          <input class="lead-form__input" id="leadName" name="name" type="text" autocomplete="name" placeholder="Например, Анна" maxlength="80" required>
+        </label>
+        <label class="lead-form__label" for="leadPhone">Телефон
+          <input class="lead-form__input" id="leadPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 (900) 000-00-00" maxlength="32" required>
+        </label>
+        <label class="lead-form__agree" for="leadConsent">
+          <input id="leadConsent" name="consent" type="checkbox" required>
+          <span>Соглашаюсь на обработку персональных данных для связи по моей заявке.</span>
+        </label>
+        <button class="btn btn--primary lead-form__submit" type="submit" data-goal="submit_quick_form">Отправить заявку</button>
+        <p class="lead-form__status" id="leadFormStatus" aria-live="polite"></p>
+      </form>
+    </section>
+  </div>
+
   <footer>
     © 2026 Татьяна Маслова · Психолог-сексолог
   </footer>
@@ -1084,6 +1253,143 @@
           window.ym(metrikaCounterId, "reachGoal", goal);
         });
       });
+
+      var leadEndpoint = window.LEAD_ENDPOINT || document.body.getAttribute("data-lead-endpoint") || "";
+      var modal = document.getElementById("leadModal");
+      var openLeadButtons = document.querySelectorAll("[data-open-lead-form]");
+      var closeLeadButtons = modal ? modal.querySelectorAll("[data-close-lead-form]") : [];
+      var leadForm = document.getElementById("leadForm");
+      var leadName = document.getElementById("leadName");
+      var leadPhone = document.getElementById("leadPhone");
+      var leadConsent = document.getElementById("leadConsent");
+      var leadStatus = document.getElementById("leadFormStatus");
+      var isSubmittingLead = false;
+
+      function setLeadStatus(message, type) {
+        if (!leadStatus) return;
+        leadStatus.textContent = message || "";
+        leadStatus.classList.toggle("is-error", type === "error");
+        leadStatus.classList.toggle("is-success", type === "success");
+      }
+
+      function openLeadModal() {
+        if (!modal) return;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        setLeadStatus("", "");
+        if (leadName) {
+          setTimeout(function () {
+            leadName.focus();
+          }, 10);
+        }
+      }
+
+      function closeLeadModal() {
+        if (!modal) return;
+        modal.hidden = true;
+        document.body.style.overflow = "";
+      }
+
+      function normalizePhone(value) {
+        return String(value || "").replace(/\s+/g, " ").trim();
+      }
+
+      function isPhoneValid(phone) {
+        var digits = phone.replace(/\D/g, "");
+        return digits.length >= 10;
+      }
+
+      openLeadButtons.forEach(function (button) {
+        button.addEventListener("click", openLeadModal);
+      });
+
+      closeLeadButtons.forEach(function (button) {
+        button.addEventListener("click", closeLeadModal);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal && !modal.hidden) {
+          closeLeadModal();
+        }
+      });
+
+      if (leadForm) {
+        leadForm.addEventListener("submit", function (event) {
+          event.preventDefault();
+          if (isSubmittingLead) return;
+
+          var nameValue = leadName ? leadName.value.trim() : "";
+          var phoneValue = normalizePhone(leadPhone ? leadPhone.value : "");
+          var consentAccepted = leadConsent ? leadConsent.checked : false;
+
+          if (nameValue.length < 2) {
+            setLeadStatus("Пожалуйста, укажите имя.", "error");
+            if (leadName) leadName.focus();
+            return;
+          }
+
+          if (!isPhoneValid(phoneValue)) {
+            setLeadStatus("Пожалуйста, укажите корректный номер телефона.", "error");
+            if (leadPhone) leadPhone.focus();
+            return;
+          }
+
+          if (!consentAccepted) {
+            setLeadStatus("Нужно подтвердить согласие на обработку данных.", "error");
+            if (leadConsent) leadConsent.focus();
+            return;
+          }
+
+          if (!leadEndpoint) {
+            setLeadStatus("Форма временно недоступна. Напишите в Telegram или позвоните, пожалуйста.", "error");
+            return;
+          }
+
+          isSubmittingLead = true;
+          var submitButton = leadForm.querySelector(".lead-form__submit");
+          if (submitButton) submitButton.disabled = true;
+          setLeadStatus("Отправляю заявку...", "");
+
+          var payload = {
+            name: nameValue,
+            phone: phoneValue,
+            consent: true,
+            source: "landing_quick_form",
+            page: window.location.href,
+            submittedAt: new Date().toISOString()
+          };
+
+          fetch(leadEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          }).then(function (response) {
+            if (!response.ok) {
+              throw new Error("submit_failed");
+            }
+            return response.json().catch(function () {
+              return { ok: true };
+            });
+          }).then(function (data) {
+            if (!data || data.ok !== true) {
+              throw new Error("submit_failed");
+            }
+            setLeadStatus("Спасибо! Заявка отправлена, скоро свяжусь с вами.", "success");
+            if (typeof window.ym === "function") {
+              window.ym(metrikaCounterId, "reachGoal", "submit_quick_form_success");
+            }
+            leadForm.reset();
+            setTimeout(closeLeadModal, 1400);
+          }).catch(function () {
+            setLeadStatus("Не удалось отправить форму. Попробуйте еще раз или напишите в Telegram.", "error");
+          }).finally(function () {
+            isSubmittingLead = false;
+            if (submitButton) submitButton.disabled = false;
+          });
+        });
+      }
 
       var certToggle = document.querySelector(".cert-toggle");
       var certPanel = document.getElementById("certPanel");
