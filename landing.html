@@ -7,6 +7,35 @@
   <meta name="description" content="Индивидуальные и семейные консультации очно в Ярославле и Гаврилов-Яме, а также онлайн. Конфиденциально, бережно и с опорой на практику.">
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon-m.svg">
   <link rel="shortcut icon" href="assets/images/favicon-m.svg">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) {
+        if (document.scripts[j].src === r) {
+          return;
+        }
+      }
+      k = e.createElement(t);
+      a = e.getElementsByTagName(t)[0];
+      k.async = 1;
+      k.src = r;
+      a.parentNode.insertBefore(k, a);
+    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=107054646", "ym");
+
+    ym(107054646, "init", {
+      ssr: true,
+      webvisor: true,
+      clickmap: true,
+      ecommerce: "dataLayer",
+      referrer: document.referrer,
+      url: location.href,
+      accurateTrackBounce: true,
+      trackLinks: true
+    });
+  </script>
+  <!-- /Yandex.Metrika counter -->
   <style>
     @font-face {
       font-family: "MainSans";
@@ -659,6 +688,7 @@
   </style>
 </head>
 <body>
+  <noscript><div><img src="https://mc.yandex.ru/watch/107054646" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <header class="top container">
     <a class="brand" href="#top" id="top">
       <span class="brand__icon">ТМ</span>
@@ -678,8 +708,8 @@
           <li>Конфиденциально, без осуждения, с понятным планом работы</li>
         </ul>
         <div class="cta-row">
-          <a class="btn btn--primary" href="https://t.me/psimaslova" target="_blank" rel="noopener">Записаться в Telegram</a>
-          <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener">Написать в VK</a>
+          <a class="btn btn--primary" href="https://t.me/psimaslova" target="_blank" rel="noopener" data-goal="click_telegram">Записаться в Telegram</a>
+          <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener" data-goal="click_vk">Написать в VK</a>
         </div>
         <p class="hero__note">Обычно отвечаю в течение дня. Первый контакт можно сделать коротко: "Хочу записаться на консультацию".</p>
       </article>
@@ -856,9 +886,9 @@
       <h2>Готовы сделать первый шаг?</h2>
       <p>Напишите удобным способом. Вы получите понятный ответ по формату работы и ближайшим свободным слотам.</p>
       <div class="contact-row">
-        <a class="btn btn--secondary" href="https://t.me/psimaslova" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn btn--secondary" href="https://wa.me/79806580030" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener">VKontakte</a>
+        <a class="btn btn--secondary" href="https://t.me/psimaslova" target="_blank" rel="noopener" data-goal="click_telegram">Telegram</a>
+        <a class="btn btn--secondary" href="https://wa.me/79806580030" target="_blank" rel="noopener" data-goal="click_whatsapp">WhatsApp</a>
+        <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener" data-goal="click_vk">VKontakte</a>
         <a class="btn btn--secondary" href="https://max.ru/u/f9LHodD0cOIgdpd_jt_RaazaZxcwpftw4pwOxpgpEv29Hu6C7ew28z7qGq0" target="_blank" rel="noopener">MAX</a>
       </div>
     </section>
@@ -869,8 +899,8 @@
   </footer>
 
   <div class="mobile-bar">
-    <a class="alt" href="https://t.me/psimaslova" target="_blank" rel="noopener">Записаться</a>
-    <a class="alt" href="tel:+79806580030">Позвонить</a>
+    <a class="alt" href="https://t.me/psimaslova" target="_blank" rel="noopener" data-goal="click_telegram">Записаться</a>
+    <a class="alt" href="tel:+79806580030" data-goal="click_phone">Позвонить</a>
   </div>
 
   <script>
@@ -881,6 +911,16 @@
         if (!button) return;
         button.addEventListener("click", function () {
           item.classList.toggle("is-open");
+        });
+      });
+
+      var metrikaCounterId = 107054646;
+      var trackedLinks = document.querySelectorAll("a[data-goal]");
+      trackedLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          var goal = link.getAttribute("data-goal");
+          if (!goal || typeof window.ym !== "function") return;
+          window.ym(metrikaCounterId, "reachGoal", goal);
         });
       });
 
