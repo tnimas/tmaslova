@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Татьяна Маслова</title>
+  <meta name="description" content="Индивидуальные и семейные консультации очно в Ярославле и Гаврилов-Яме, а также онлайн. Конфиденциально, бережно и с опорой на практику.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon-m.svg">
+  <link rel="shortcut icon" href="assets/images/favicon-m.svg">
+  <style>
+    @font-face {
+      font-family: "MainSans";
+      font-style: normal;
+      font-weight: 250 1000;
+      src: url("assets/fonts/font-001-8b11b6143f292b85.woff2") format("woff2-variations");
+    }
+
+    :root {
+      --bg: #edf4ff;
+      --bg-accent: #dbe9ff;
+      --surface: #ffffff;
+      --text: #1f2a3d;
+      --muted: #57627a;
+      --accent: #5199ff;
+      --accent-strong: #1771f1;
+      --line: #d3e2ff;
+      --ok: #2f9b56;
+      --shadow: 0 18px 45px rgba(23, 113, 241, 0.14);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "MainSans", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 90% -10%, #c4dcff 0%, transparent 38%),
+        radial-gradient(circle at 0% 45%, #d7e6ff 0%, transparent 34%),
+        var(--bg);
+      line-height: 1.5;
+      padding-bottom: 82px;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .top {
+      padding: 20px 0 8px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 20px rgba(81, 153, 255, 0.35);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+      margin: 18px 0 36px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .hero__content {
+      padding: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #edf4ff;
+      color: #2d62b5;
+      font-size: 14px;
+      font-weight: 650;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.2vw, 21px);
+      max-width: 58ch;
+    }
+
+    .trust-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+      color: #33435f;
+      font-size: 16px;
+    }
+
+    .trust-list li::before {
+      content: "\2713";
+      color: var(--ok);
+      font-weight: 800;
+      margin-right: 10px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn--primary {
+      background: var(--accent-strong);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(23, 113, 241, 0.28);
+    }
+
+    .btn--secondary {
+      background: #fff;
+      color: var(--accent-strong);
+      border-color: #9ec3ff;
+    }
+
+    .hero__note {
+      margin-top: 14px;
+      color: #607089;
+      font-size: 14px;
+    }
+
+    .hero__person {
+      padding: 24px;
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .hero__img {
+      width: 100%;
+      aspect-ratio: 4 / 4.2;
+      border-radius: 18px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .person-name {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .person-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .mini-card {
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      text-align: center;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 19px;
+      color: #245aa8;
+      line-height: 1.1;
+    }
+
+    .mini-card span {
+      font-size: 12px;
+      color: #667694;
+    }
+
+    section {
+      margin: 22px 0;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.16;
+      letter-spacing: -0.01em;
+    }
+
+    .section-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 70ch;
+    }
+
+    .steps {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .step {
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+    }
+
+    .step__num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #e4efff;
+      color: #295ea8;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .topics,
+    .prices {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #394a66;
+      display: grid;
+      gap: 8px;
+    }
+
+    .price {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .price-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .faq {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 14px 16px;
+      font-size: 17px;
+      font-family: inherit;
+      font-weight: 650;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .faq__answer {
+      margin: 6px 4px 0;
+      color: var(--muted);
+      font-size: 15px;
+      display: none;
+    }
+
+    .faq__item.is-open .faq__answer {
+      display: block;
+    }
+
+    .final {
+      margin-top: 24px;
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      border: 1px solid #9fc3ff;
+      background: linear-gradient(140deg, #eef5ff 0%, #d9e8ff 100%);
+    }
+
+    .final h2 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.14;
+    }
+
+    .final p {
+      margin: 0;
+      color: #324767;
+    }
+
+    .contact-row {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    footer {
+      padding: 26px 0 6px;
+      color: #6a7991;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .mobile-bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 20;
+      display: none;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 8px 30px rgba(34, 66, 118, 0.2);
+      backdrop-filter: blur(6px);
+    }
+
+    .mobile-bar a {
+      flex: 1;
+      min-height: 44px;
+      padding: 0 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mobile-bar .main {
+      background: var(--accent-strong);
+      color: #fff;
+    }
+
+    .mobile-bar .alt {
+      border: 1px solid #a0c4ff;
+      color: #245aa8;
+      background: #fff;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .steps,
+      .topics,
+      .prices {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding-bottom: 104px;
+      }
+
+      .hero__content,
+      .hero__person {
+        padding: 20px;
+      }
+
+      .steps,
+      .topics,
+      .prices,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-bar {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top container">
+    <a class="brand" href="#top" id="top">
+      <span class="brand__icon">ТМ</span>
+      <span>Татьяна Маслова</span>
+    </a>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <article class="panel hero__content">
+        <span class="eyebrow">Очно в Ярославле и Гаврилов-Яме · Онлайн по всему миру</span>
+        <h1>Помогаю мягко пройти кризис в отношениях и вернуть близость</h1>
+        <p class="lead">Индивидуальные и семейные консультации для взрослых и подростков 16+ с письменного согласия родителей.</p>
+        <ul class="trust-list">
+          <li>8+ лет частной практики в психологическом консультировании</li>
+          <li>Гештальт-терапевт, дополнительная специализация в сексологии</li>
+          <li>Конфиденциально, без осуждения, с понятным планом работы</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn--primary" href="https://t.me/psimaslova" target="_blank" rel="noopener">Записаться в Telegram</a>
+          <a class="btn btn--secondary" href="https://wa.me/79806580030" target="_blank" rel="noopener">Написать в WhatsApp</a>
+        </div>
+        <p class="hero__note">Обычно отвечаю в течение дня. Первый контакт можно сделать коротко: "Хочу записаться на консультацию".</p>
+      </article>
+
+      <aside class="panel hero__person">
+        <img class="hero__img" src="assets/images/img-005-a29672f832b8ffae.jpg" alt="Психолог-сексолог Татьяна Маслова">
+        <h2 class="person-name">Татьяна Маслова</h2>
+        <p class="person-sub">Психолог, семейный психолог, сексолог</p>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong>50 мин</strong>
+            <span>индивидуально</span>
+          </div>
+          <div class="mini-card">
+            <strong>90 мин</strong>
+            <span>консультация пары</span>
+          </div>
+          <div class="mini-card">
+            <strong>Онлайн</strong>
+            <span>и очно</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section>
+      <h2 class="section-title">Как проходит первая встреча</h2>
+      <p class="section-sub">Чтобы снизить тревогу перед обращением, процесс заранее прозрачен и понятен.</p>
+      <div class="steps">
+        <article class="step">
+          <div class="step__num">1</div>
+          <h3>Короткое знакомство</h3>
+          <p>Вы пишете в удобный мессенджер, и мы согласовываем формат, время и условия.</p>
+        </article>
+        <article class="step">
+          <div class="step__num">2</div>
+          <h3>Формулируем запрос</h3>
+          <p>На консультации уточняем, что именно беспокоит и какого результата вы хотите.</p>
+        </article>
+        <article class="step">
+          <div class="step__num">3</div>
+          <h3>Рабочий план</h3>
+          <p>Определяем ближайшие шаги и формат дальнейшей терапии в комфортном темпе.</p>
+        </article>
+        <article class="step">
+          <div class="step__num">4</div>
+          <h3>Поддержка между сессиями</h3>
+          <p>Фиксируем, на что обращать внимание до следующей встречи, чтобы видеть прогресс.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">С какими запросами я работаю</h2>
+      <p class="section-sub">Вы можете прийти с одним вопросом или с ощущением "мне сложно, но не могу точно назвать почему".</p>
+      <div class="topics">
+        <article class="card">
+          <h3>Индивидуально</h3>
+          <ul>
+            <li>Снижение либидо, трудности с возбуждением и оргазмом</li>
+            <li>Страх близости, тревога перед интимной жизнью</li>
+            <li>Последствия травматических сексуальных переживаний</li>
+            <li>Эректильная дисфункция, преждевременная эякуляция</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Для пары</h3>
+          <ul>
+            <li>Конфликты, дистанция и постоянные обиды</li>
+            <li>Сложности с эмоциональной и сексуальной близостью</li>
+            <li>Кризис после измены или на этапе развода</li>
+            <li>Непонимание и трудности коммуникации в семье</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Сексология</h3>
+          <ul>
+            <li>Психосексуальная дисгармония в отношениях</li>
+            <li>Сексуальная тревога и внутренние запреты</li>
+            <li>Особенности сексуальности в разные периоды жизни</li>
+            <li>Снижение качества интимной жизни в паре</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Форматы и стоимость</h2>
+      <div class="prices">
+        <article class="card">
+          <div class="price"><span>Индивидуальная консультация</span><span>3500 ₽</span></div>
+          <p class="price-note">50 минут, очно в Ярославле или онлайн.</p>
+        </article>
+        <article class="card">
+          <div class="price"><span>Консультация пары</span><span>5000 ₽</span></div>
+          <p class="price-note">90 минут, очно или онлайн.</p>
+        </article>
+        <article class="card">
+          <div class="price"><span>Льготная стоимость</span><span>3000/4500 ₽</span></div>
+          <p class="price-note">Только в кабинете г. Гаврилов-Ям.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Частые вопросы</h2>
+      <div class="faq" id="faq">
+        <article class="faq__item">
+          <button type="button">Сколько встреч обычно нужно?</button>
+          <p class="faq__answer">Зависит от запроса. Иногда достаточно нескольких консультаций для стабилизации состояния, а иногда важна более глубокая и длительная работа.</p>
+        </article>
+        <article class="faq__item">
+          <button type="button">Можно ли сначала написать и уточнить детали?</button>
+          <p class="faq__answer">Да, конечно. Можно кратко описать ситуацию в Telegram, WhatsApp или VK, и я помогу выбрать формат первой встречи.</p>
+        </article>
+        <article class="faq__item">
+          <button type="button">Как проходит онлайн-консультация?</button>
+          <p class="faq__answer">Через Яндекс Телемост, мессенджеры или по вашей ссылке. По эффективности онлайн-формат сопоставим с очной работой в большинстве запросов.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="final">
+      <h2>Готовы сделать первый шаг?</h2>
+      <p>Напишите удобным способом. Вы получите понятный ответ по формату работы и ближайшим свободным слотам.</p>
+      <div class="contact-row">
+        <a class="btn btn--primary" href="https://t.me/psimaslova" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn btn--secondary" href="https://wa.me/79806580030" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn--secondary" href="https://vk.me/tmaslovapsi" target="_blank" rel="noopener">VKontakte</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Татьяна Маслова · Психолог-сексолог
+  </footer>
+
+  <div class="mobile-bar">
+    <a class="main" href="https://t.me/psimaslova" target="_blank" rel="noopener">Записаться</a>
+    <a class="alt" href="tel:+79806580030">Позвонить</a>
+  </div>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".faq__item");
+      items.forEach(function (item) {
+        var button = item.querySelector("button");
+        if (!button) return;
+        button.addEventListener("click", function () {
+          item.classList.toggle("is-open");
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
