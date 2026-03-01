@@ -307,6 +307,170 @@
       gap: 12px;
     }
 
+    .credentials {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .cred {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 18px;
+    }
+
+    .cred__tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ecf4ff;
+      color: #2c60a8;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cred h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .cred p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .cert-gallery {
+      margin-top: 14px;
+      padding: 14px;
+    }
+
+    .cert-toggle {
+      margin-top: 14px;
+      width: 100%;
+      min-height: 52px;
+      border-radius: 14px;
+      border: 1px solid #9fc3ff;
+      background: #f2f7ff;
+      color: #245aa8;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color .2s ease;
+    }
+
+    .cert-toggle:hover {
+      background: #e9f2ff;
+    }
+
+    .cert-panel {
+      display: none;
+    }
+
+    .cert-panel.is-open {
+      display: block;
+      margin-top: 12px;
+    }
+
+    .cert-slider {
+      position: relative;
+      border-radius: 18px;
+      background: #f2f7ff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .cert-track {
+      overflow: hidden;
+    }
+
+    .cert-slides {
+      display: flex;
+      transition: transform .42s ease;
+      width: 100%;
+    }
+
+    .cert-slide {
+      flex: 0 0 100%;
+      min-width: 100%;
+      min-height: 430px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .cert-slide img {
+      width: 100%;
+      max-height: 580px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(37, 88, 158, 0.15);
+    }
+
+    .cert-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #bfd8ff;
+      background: rgba(255, 255, 255, 0.95);
+      color: #2357a0;
+      font-size: 21px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2;
+      transition: background-color .2s ease, transform .2s ease;
+    }
+
+    .cert-arrow:hover {
+      background: #ffffff;
+      transform: translateY(-50%) scale(1.03);
+    }
+
+    .cert-arrow--prev {
+      left: 10px;
+    }
+
+    .cert-arrow--next {
+      right: 10px;
+    }
+
+    .cert-bullets {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .cert-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 0;
+      background: #aac8f7;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .cert-bullet.is-active {
+      background: #2f6ec7;
+      transform: scale(1.1);
+    }
+
     .card {
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
@@ -454,7 +618,8 @@
 
       .steps,
       .topics,
-      .prices {
+      .prices,
+      .credentials {
         grid-template-columns: 1fr 1fr;
       }
     }
@@ -469,9 +634,20 @@
         padding: 20px;
       }
 
+      .cert-slide {
+        min-height: 300px;
+        padding: 8px;
+      }
+
+      .cert-arrow {
+        width: 34px;
+        height: 34px;
+      }
+
       .steps,
       .topics,
       .prices,
+      .credentials,
       .mini-grid {
         grid-template-columns: 1fr;
       }
@@ -591,6 +767,56 @@
     </section>
 
     <section>
+      <h2 class="section-title">Дипломы и сертификаты</h2>
+      <p class="section-sub">Чтобы вам было спокойнее при выборе специалиста, ниже - ключевые документы о квалификации.</p>
+      <div class="credentials">
+        <article class="cred">
+          <span class="cred__tag">Высшее образование</span>
+          <h3>ЯрГУ им. Демидова</h3>
+          <p>Магистр по направлению консультационной психологии.</p>
+        </article>
+        <article class="cred">
+          <span class="cred__tag">Профпереподготовка</span>
+          <h3>Гештальт-терапия</h3>
+          <p>Московский Институт Гештальта и Психодрамы, квалификация гештальт-терапевт/консультант.</p>
+        </article>
+        <article class="cred">
+          <span class="cred__tag">Специализация</span>
+          <h3>Сексология</h3>
+          <p>Дополнительные программы по сексологическому консультированию, коррекции и работе с сексуальной дисгармонией.</p>
+        </article>
+      </div>
+      <button class="cert-toggle" type="button" aria-expanded="false" aria-controls="certPanel">Показать сканы документов</button>
+      <div class="cert-panel" id="certPanel">
+        <div class="cert-gallery panel">
+          <div class="cert-slider" aria-roledescription="carousel" aria-label="Дипломы и сертификаты">
+            <button class="cert-arrow cert-arrow--prev" type="button" aria-label="Предыдущий документ">&#8249;</button>
+            <div class="cert-track">
+              <div class="cert-slides">
+                <figure class="cert-slide"><img src="assets/images/img-011-532607d47d999196.jpg" alt="Диплом и сертификат 1"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-012-710ef010619276fe.jpg" alt="Диплом и сертификат 2"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-013-e37b1c60f1ffb2c3.jpg" alt="Диплом и сертификат 3"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-014-582ecb0adb88bc54.jpg" alt="Диплом и сертификат 4"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-015-db32e741574d39a0.jpg" alt="Диплом и сертификат 5"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-016-52ebc3ee38c00e8a.jpg" alt="Диплом и сертификат 6"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-017-a564f56a8524229e.jpg" alt="Диплом и сертификат 7"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-018-11b4614ac4c76f42.jpg" alt="Диплом и сертификат 8"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-019-58b44ff46177a0a0.png" alt="Диплом и сертификат 9"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-020-84a7a2422cf93b06.jpg" alt="Диплом и сертификат 10"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-021-2a8de8ccfaef2000.jpg" alt="Диплом и сертификат 11"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-022-e3f3afec9a1b5640.jpg" alt="Диплом и сертификат 12"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-023-fbae9c7f25aa27e8.jpg" alt="Диплом и сертификат 13"></figure>
+                <figure class="cert-slide"><img src="assets/images/img-010-28f2cdc8676ded05.jpg" alt="Диплом и сертификат 14"></figure>
+              </div>
+            </div>
+            <button class="cert-arrow cert-arrow--next" type="button" aria-label="Следующий документ">&#8250;</button>
+          </div>
+          <div class="cert-bullets" aria-label="Навигация по документам"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2 class="section-title">Форматы и стоимость</h2>
       <div class="prices">
         <article class="card">
@@ -656,6 +882,78 @@
         button.addEventListener("click", function () {
           item.classList.toggle("is-open");
         });
+      });
+
+      var certToggle = document.querySelector(".cert-toggle");
+      var certPanel = document.getElementById("certPanel");
+      if (certToggle && certPanel) {
+        certToggle.addEventListener("click", function () {
+          var isOpen = certPanel.classList.toggle("is-open");
+          certToggle.setAttribute("aria-expanded", String(isOpen));
+          certToggle.textContent = isOpen ? "Скрыть сканы документов" : "Показать сканы документов";
+        });
+      }
+
+      var sliders = document.querySelectorAll(".cert-slider");
+      sliders.forEach(function (slider) {
+        var track = slider.querySelector(".cert-slides");
+        var slides = Array.from(slider.querySelectorAll(".cert-slide"));
+        var prev = slider.querySelector(".cert-arrow--prev");
+        var next = slider.querySelector(".cert-arrow--next");
+        var bulletsHost = slider.parentElement.querySelector(".cert-bullets");
+        if (!track || !slides.length || !bulletsHost) return;
+
+        var currentIndex = 0;
+        var bullets = [];
+
+        slides.forEach(function (_, index) {
+          var bullet = document.createElement("button");
+          bullet.type = "button";
+          bullet.className = "cert-bullet";
+          bullet.setAttribute("aria-label", "Перейти к документу " + (index + 1));
+          bullet.addEventListener("click", function () {
+            showSlide(index);
+          });
+          bulletsHost.appendChild(bullet);
+          bullets.push(bullet);
+        });
+
+        function render() {
+          track.style.transform = "translateX(-" + currentIndex * 100 + "%)";
+          slides.forEach(function (slide, index) {
+            slide.setAttribute("aria-hidden", String(index !== currentIndex));
+          });
+          bullets.forEach(function (bullet, index) {
+            bullet.classList.toggle("is-active", index === currentIndex);
+          });
+        }
+
+        function showSlide(index) {
+          currentIndex = (index + slides.length) % slides.length;
+          render();
+        }
+
+        if (slides.length < 2) {
+          if (prev) prev.hidden = true;
+          if (next) next.hidden = true;
+          bulletsHost.style.display = "none";
+          render();
+          return;
+        }
+
+        if (prev) {
+          prev.addEventListener("click", function () {
+            showSlide(currentIndex - 1);
+          });
+        }
+
+        if (next) {
+          next.addEventListener("click", function () {
+            showSlide(currentIndex + 1);
+          });
+        }
+
+        render();
       });
     })();
   </script>
